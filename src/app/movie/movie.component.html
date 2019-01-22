@@ -1,0 +1,129 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="row">
+    <h1>Herolo Cinema</h1>
+    <button class="btn btn-primary floatRight" (click)="AddNewMovie(newMovie)">Add New Movie</button>
+  </div>
+</nav>
+
+<div class="container">
+  <br>
+  <div class="row mb-3">
+    <div class="col-md-3 mb-3" *ngFor="let movie of movies">
+      <div class="text-center">
+        <div class="well img-thumbnail">
+          <img src="{{movie.Poster}}">
+          <h5>{{movie.Title}}</h5>
+          <footer class="modal-footer">
+            <button class="btn btn-primary mr-auto" (click)="showProp(movie.Title, content)">More</button>
+            <button class="btn btn-danger" (click)="removeMovie(movie.Title)">Remove</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #newMovie let-modal>
+  <div class="modal-header">
+    <form class="form-inline">
+      <h4>Add New Movie</h4>
+    </form>
+  </div>
+  <div class="modal-body">
+    <form class="form-inline mb-3">
+      <label for="rg-from">Title: </label>
+      <div class="form-group">
+        <input type="text" id="rg-from" name="rg-from" class="form-control" value="">
+      </div>
+    </form>
+    <form class="form-inline mb-3">
+      <label for="rg-from">Released date: </label>
+      <div class="form-group">
+        <input type="text" id="rg-from" name="rg-from" class="form-control" value="">
+      </div>
+    </form>
+    <form class="form-inline mb-3">
+      <label for="rg-from">Runtime: </label>
+      <div class="form-group">
+        <input type="text" id="rg-from" name="rg-from" class="form-control" value="">
+      </div>
+    </form>
+    <form class="form-inline mb-3">
+      <label for="rg-from">Genre: </label>
+      <div class="form-group">
+        <input type="text" id="rg-from" name="rg-from" class="form-control" value="">
+      </div>
+    </form>
+    <form class="form-inline mb-3">
+      <label for="rg-from">Director: </label>
+      <div class="form-group">
+        <input type="text" id="rg-from" name="rg-from" class="form-control" value="">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary mr-auto">
+      Save</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #content let-modal>
+  <div class="modal-header" *ngIf="show">
+    <h4 class="modal-title">{{selectedMovie.Title}}</h4>
+  </div>
+
+  <div class="modal-body" *ngIf="show">
+    <p>Released date: {{selectedMovie.Released}}</p>
+    <p>Runtime: {{selectedMovie.Runtime}}</p>
+    <p>Genre: {{selectedMovie.Genre}}</p>
+    <p>Director: {{selectedMovie.Director}}</p>
+  </div>
+  <form>
+    <div class="modal-header form-inline" *ngIf="!show">
+      <form class="form-inline">
+        <label for="rg-from">Title: </label>
+        <div class="form-group">
+          <input type="text" id="rg-from" name="rg-from" class="form-control" [ngClass]="!TitleValidation ? 'redBorder': 'greenBorder'"
+            [(ngModel)]="selectedMovie.Title" value="{{selectedMovie.Title | titlecase}}">
+        </div>
+      </form>
+    </div>
+    <div class="modal-body" *ngIf="!show">
+      <form class="form-inline mb-3">
+        <label for="rg-from">Released date: </label>
+        <div class="form-group">
+          <input type="date" id="rg-from" name="rg-from" class="form-control" [ngClass]="!ReleasedValidation ? 'redBorder': 'greenBorder'"
+            [(ngModel)]="selectedMovie.Released" value="{{selectedMovie.Released}}">
+        </div>
+      </form>
+      <form class="form-inline mb-3">
+        <label for="rg-from">Runtime: </label>
+        <div class="form-group">
+          <input type="number" id="rg-from" name="rg-from" class="form-control" [ngClass]="!RuntimeValidation ? 'redBorder': 'greenBorder'"
+            [(ngModel)]="selectedMovie.Runtime" value="{{selectedMovie.Runtime}}">
+        </div>
+      </form>
+      <form class="form-inline mb-3">
+        <label for="rg-from">Genre: </label>
+        <div class="form-group">
+          <input type="text" id="rg-from" name="rg-from" class="form-control" [ngClass]="!GenreValidation ? 'redBorder': 'greenBorder'"
+            [(ngModel)]="selectedMovie.Genre" value="{{selectedMovie.Genre}}">
+        </div>
+      </form>
+      <form class="form-inline">
+        <label for="rg-from">Director: </label>
+        <div class="form-group">
+          <input type="text" id="rg-from" name="rg-from" class="form-control" [ngClass]="!DirectorValidation ? 'redBorder': 'greenBorder'"
+            [(ngModel)]="selectedMovie.Director" value="{{selectedMovie.Director}}">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary mr-auto" (click)="valuechange(value)" *ngIf="!show">Save</button>
+      <button type="button" class="btn btn-primary mr-auto" (click)="edit()" *ngIf="show">Edit</button>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="edit()" *ngIf="!show">Cancel</button>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.close('Close click')" *ngIf="show">Close</button>
+    </div>
+  </form>
+</ng-template>
