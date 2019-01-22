@@ -21,14 +21,14 @@ export class MovieComponent implements OnInit {
   constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
-    fetch('http://www.omdbapi.com/?apikey=8029c9fc&s=' + this.Title)
+    fetch('https://www.omdbapi.com/?apikey=8029c9fc&s=' + this.Title)
       .then(response => response.json())
       .then(res => this.movies = res.Search);
 
   }
 
   showProp(m, content) {
-    fetch('http://www.omdbapi.com/?apikey=8029c9fc&t=' + m)
+    fetch('https://www.omdbapi.com/?apikey=8029c9fc&t=' + m)
       .then(response => response.json())
       .then(res => {
         this.selectedMovie = res
